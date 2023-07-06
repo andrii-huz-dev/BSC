@@ -1,11 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { AppNavigator } from './modules/auth/app-navigator';
+import { AuthProvider } from './providers/auth';
+import { PaperProvider } from 'react-native-paper';
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
+import { QueryClientProvider } from 'react-query';
+
+import React from 'react';
+import { queryClient } from './api/basic';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <QueryClientProvider client={queryClient}>
+        <BottomSheetModalProvider>
+          <PaperProvider>
+            <AuthProvider>
+              <StatusBar style="auto" />
+              <AppNavigator />
+            </AuthProvider>
+          </PaperProvider>
+        </BottomSheetModalProvider>
+      </QueryClientProvider>
     </View>
   );
 }
@@ -13,8 +29,5 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 });
